@@ -1,0 +1,70 @@
+皮马印第安妇女的糖尿病
+ Diabetes in Pima Indian Women
+描述
+ Description
+根据世界卫生组织的标准，对居住在亚利桑那州凤凰城附近的至少21岁的皮马印第安人女性进行了糖尿病检测。 A population of women who were at least 21 years old, of Pima Indian heritage and living near Phoenix, Arizona, was tested for diabetes according to World Health Organization criteria.  这些数据是由美国国家糖尿病、消化和肾脏疾病研究所收集的。  The data were collected by the US National Institute of Diabetes and Digestive and Kidney Diseases.  我们在去掉(主要是缺失的)血清胰岛素数据后使用了532份完整的记录。
+  We used the 532 complete records after dropping the (mainly missing) data on serum insulin.
+
+使用
+ Usage
+Pima.tr
+ Pima.tr
+Pima.tr2
+ Pima.tr2
+Pima.te
+ Pima.te
+格式
+ Format
+这些数据框架包含以下列:
+ These data frames contains the following columns:
+
+npreg
+ npreg
+怀孕次数。
+ number of pregnancies.
+
+glu
+ glu
+口服葡萄糖耐量试验中的血浆葡萄糖浓度。
+ plasma glucose concentration in an oral glucose tolerance test.
+
+英国石油公司
+ bp
+舒张压(mm Hg)。
+ diastolic blood pressure (mm Hg).
+
+皮肤。
+ skin
+三头肌皮肤褶皱厚度(mm)。
+ triceps skin fold thickness (mm).
+
+身体质量指数
+ bmi
+
+
+ped
+ ped
+糖尿病谱系功能。
+ diabetes pedigree function.
+
+年龄
+ age
+以年为单位的年龄。
+ age in years.
+
+类型
+ type
+是或否，根据世卫组织标准诊断糖尿病。
+ Yes or No, for diabetic according to WHO criteria.
+
+细节
+ Details
+训练集Pima。 The training set Pima. tr包含随机选择的200个受试者，而Pima。  tr contains a randomly selected set of 200 subjects, and Pima. 其中包含其余的332个主题。  te contains the remaining 332 subjects.  皮马人。  Pima. tr2包含Pima。  tr2 contains Pima. Tr加上100个解释变量中缺失值的受试者。
+  tr plus 100 subjects with missing values in the explanatory variables.
+
+源
+ Source
+Smith, J. W.， Everhart, J. E.， Dickson, W. C.， Knowler, W. C.和Johannes, R. S.(1988)使用ADAP学习算法预测糖尿病的发病。 Smith, J. W., Everhart, J. E., Dickson, W. C., Knowler, W. C. and Johannes, R. S. (1988) Using the ADAP learning algorithm to forecast the onset of diabetes mellitus.  《医疗护理中的计算机应用研讨会论文集》(华盛顿，1988年)，R. A. Greenes编，第261-265页。  In Proceedings of the Symposium on Computer Applications in Medical Care (Washington, 1988), ed. R. A. Greenes, pp. 261–265.  Los Alamitos, CA: IEEE计算机协会出版社。
+  Los Alamitos, CA: IEEE Computer Society Press.
+
+Ripley, B.D.(1996)模式识别与神经网络。 Ripley, B.D. (1996) Pattern Recognition and Neural Networks.  剑桥:剑桥大学出版社。  Cambridge: Cambridge University Press.
