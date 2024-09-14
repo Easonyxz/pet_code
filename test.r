@@ -1,6 +1,8 @@
 # conda create -n pet r-base=4.4.1 python=3.12
 # conda activate pet
 # conda install r-ggplot2
+# conda install r-httpuv
+# conda install conda-forge::r-httpgd
 # h <- c(1, 2, 3, 4, 5, 6)
 # M <- c("A", "B", "C", "D", "E", "F")
 # barplot(h,
@@ -8,18 +10,18 @@
 #     col = "#d7f5f5", main = "Chart", border = "#252424"
 # )
 
-# add <- function(x, y) {
-#     return(x + y)
-# }
+add <- function(x, y) {
+    return(x + y)
+}
 
-# print(add(1, 2))
+print("还好")
 
 
 ## 上机实践代码
-library(MASS) # 加载MASS软件包
-data(Pima.tr) #加载Pima.tr数据集
-help(Pima.tr) # 查看Pima.tr数据集的说明
-Pima = rbind(Pima.tr,Pima.te) # 合并数据集
+# library(MASS) # 加载MASS软件包
+# data(Pima.tr) #加载Pima.tr数据集
+# help(Pima.tr) # 查看Pima.tr数据集的说明
+# Pima = rbind(Pima.tr,Pima.te) # 合并数据集
 # # 抽取数据举例
 # Pima_n=Pima[Pima$type=='No'& Pima$age==22,] #抽取Pima数据集中年龄=22岁,非糖尿病患者的数据
 # # 直方图举例
