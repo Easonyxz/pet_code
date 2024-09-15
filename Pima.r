@@ -9,9 +9,10 @@ Pima_n <- Pima[Pima$type == "No" & Pima$age == 22, ] # 抽取Pima数据集中年
 # legend("topleft", c("BMI", "skin"), cex = 0.6, fill = c("orange", "brown"))
 # title("BMI and skin thickness")
 
+
 # barplot_data <- cbind(Pima_n$bmi, Pima_n$skin)
 # colnames(barplot_data) <- c("bmi", "skin")
-# print(barplot_data)
+# # print(barplot_data)
 # g1 <- ggplot(barplot_data,aes(bmi,skin)) +
 #     geom_bar(stat = "identity", fill = "orange")
 # labs(
@@ -22,7 +23,8 @@ Pima_n <- Pima[Pima$type == "No" & Pima$age == 22, ] # 抽取Pima数据集中年
 # theme(plot.title = element_text(
 #     face = "bold.italic", color = "orange", size = 24, hjust = 0.5, vjust = 0.5
 # ))
-
+# print(g1)
+# ggsave("BMI和皮肤厚度.png", plot = g1, dpi = 500)
 
 
 
@@ -52,7 +54,7 @@ Pima_n <- Pima[Pima$type == "No" & Pima$age == 22, ] # 抽取Pima数据集中年
 
 # # 不同年龄的血糖浓度(中位数)数据处理
 # diabetes_data <- Pima[Pima$type == "Yes", ]
-# line_data <- stack(tapply(Pima_y$glu, Pima_y$age, median))
+# line_data <- stack(tapply(diabetes_data$glu, diabetes_data$age, median))
 # colnames(line_data) <- c("glu_median", "age_median")
 # # 绘制折线图
 # g3 <- ggplot(line_data, aes(
@@ -62,7 +64,7 @@ Pima_n <- Pima[Pima$type == "No" & Pima$age == 22, ] # 抽取Pima数据集中年
 #     geom_point() +
 #     labs(
 #         x = "年龄", y = "血糖浓度",
-#         title = "不同年龄的血糖浓度(中位数)",
+#         title = "不同年龄的糖尿病患者血糖浓度(中位数)",
 #     ) +
 #     theme(
 #         plot.title = element_text(
@@ -106,24 +108,24 @@ Pima_n <- Pima[Pima$type == "No" & Pima$age == 22, ] # 抽取Pima数据集中年
 # boxplot(Pima_y$glu, Pima_n$glu, names = c("Diabetes", "Non-diabetes"), ylab = "glu", col = c("red", "blue")) # 画出箱式图，比较糖尿病患者和非糖尿病患者的血糖浓度
 # title("Plasma glucose concentration")血浆葡萄糖浓度
 
-box_data <- Pima[Pima$age == 22, ]
-g5 <- ggplot(box_data, aes(x = type, y = glu)) +
-    geom_boxplot(aes(fill = type)) +
-    stat_boxplot(geom = "errorbar", width = 0.1, size = 0.8) +
-    stat_summary(fun = mean, geom = "point", size = 3, color = "blue") +
-    theme(legend.position = c(0.85, 0.2)) +
-    labs(
-        x = "", y = "血糖浓度",
-        title = "糖尿病患者和非糖尿病患者的血糖浓度对比",
-        subtitle = "年龄22岁"
-    ) +
-    theme(
-        plot.title = element_text(
-            face = "bold.italic", color = "#c33349", size = 24, hjust = 0.5, vjust = 0.5
-        )
-    ) +
-    scale_fill_discrete(labels = c("非糖尿病患者", "糖尿病患者"), name = "类型") +
-    scale_x_discrete(labels = c("非糖尿病患者", "糖尿病患者"))
+# box_data <- Pima[Pima$age == 22, ]
+# g5 <- ggplot(box_data, aes(x = type, y = glu)) +
+#     geom_boxplot(aes(fill = type)) +
+#     stat_boxplot(geom = "errorbar", width = 0.1, size = 0.8) +
+#     stat_summary(fun = mean, geom = "point", size = 3, color = "blue") +
+#     theme(legend.position = c(0.85, 0.2)) +
+#     labs(
+#         x = "", y = "血糖浓度",
+#         title = "糖尿病患者和非糖尿病患者的血糖浓度对比",
+#         subtitle = "年龄22岁"
+#     ) +
+#     theme(
+#         plot.title = element_text(
+#             face = "bold.italic", color = "#c33349", size = 24, hjust = 0.5, vjust = 0.5
+#         )
+#     ) +
+#     scale_fill_discrete(labels = c("非糖尿病患者", "糖尿病患者"), name = "类型") +
+#     scale_x_discrete(labels = c("非糖尿病患者", "糖尿病患者"))
 
 
-print(g5)
+
