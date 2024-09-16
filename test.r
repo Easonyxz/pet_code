@@ -2,7 +2,9 @@
 # conda activate pet
 # conda install r-ggplot2
 # conda install r-httpuv
-# conda install conda-forge::r-httpgd
+# conda install conda-forge::r-dplyr
+# conda install conda-forge::r-tidyr
+
 # h <- c(1, 2, 3, 4, 5, 6)
 # M <- c("A", "B", "C", "D", "E", "F")
 # barplot(h,
@@ -15,44 +17,70 @@ add <- function(x, y) {
 }
 
 print("还好")
+library("ggplot2") # 数据可视化
+library("dplyr") # 数据处理
+library(scales) # 数据处理
+library(MASS) # 加载MASS软件包
+data(Pima.tr) # 加载Pima.tr数据集
+Pima <- rbind(Pima.tr, Pima.te) # 合并数据集
+Pima_n <- Pima[Pima$type == "No" & Pima$age == 22, ] # 抽取Pima数据集中年龄=22岁,非糖尿病患者的数据
 
 
-## 上机实践代码
-# library(MASS) # 加载MASS软件包
-# data(Pima.tr) #加载Pima.tr数据集
-# help(Pima.tr) # 查看Pima.tr数据集的说明
-# Pima = rbind(Pima.tr,Pima.te) # 合并数据集
-# # 抽取数据举例
-# Pima_n=Pima[Pima$type=='No'& Pima$age==22,] #抽取Pima数据集中年龄=22岁,非糖尿病患者的数据
-# # 直方图举例
-# hist(Pima_n$bp,main="Histogram of diastolic \n blood pressure",xlab="Blood pressure (mm Hg)") #画出Pima_n中血压的直方图
-# # 折线图举例
-# Pima_y=Pima[Pima$type=='Yes',] # 抽取糖尿病患者的数据
-# medglu = tapply(Pima_y$glu,Pima_y$age,median) # 计算每个年龄血糖的中位数
-# plot(medglu,xlab="Age",ylab="Median glu",type="o") # 画出年龄与血糖的折线图
-# title("Median plasma glucose concentration \n at different ages")
-# # 饼图举例
-# xx = Pima_y$npreg # 抽取怀孕次数的数据
-# t = table(xx) # 计算频数
-# data = as.data.frame(t) #将频数表转换成数据框
-# colnames(data) = c('npreg', 'Freq') #修改数据框的列名
-# percentage = round(data$Freq / sum(data$Freq), 2) * 100 # 计算百分比
-# percentage = paste0(percentage, "%") # 添加百分号
-# lb = paste0(names(t),": ",percentage) # 添加标签
-# pie(data$Freq, labels=lb) # 画出饼图
-# title("Piechart of numbers of pregnancies") # 添加标题
-# # 柱形图举例
-# barplot(rbind(Pima_n$bmi,Pima_n$skin),col=c("orange","brown"))
-# legend("topleft", c("BMI","skin"), cex=0.6, fill=c("orange","brown"))
-# title("BMI and skin thickness")
-# # 箱式图举例
-# Pima_y=Pima[Pima$type=='Yes'& Pima$age==22,] #抽取Pima数据集中年龄=22岁,糖尿病患者的数据
-# boxplot(Pima_y$glu,Pima_n$glu,names=c("Diabetes","Non-diabetes"),ylab="glu",col=c("red","blue")) # 画出箱式图，比较糖尿病患者和非糖尿病患者的血糖浓度
-# title("Plasma glucose concentration")
+barplot_data <- cbind(Pima_n$bmi, Pima_n$skin)
+colnames(barplot_data) <- c("bmi", "skin")
+# print(barplot_data)
+lm_eqn <- function(df) {
+    m <- lm(y ~ x, df)
+    eq <- substitute(
+        italic(y) == a + b %.% italic(x),
+        list(
+            a = format(unname(coef(m)[1]), digits = 2),
+            b = format(unname(coef(m)[2]), digits = 2)
+        )
+    )
+    as.character(as.expression(eq))
+}
+lm_data <- as.data.frame(barplot_data)
+colnames(lm_data) <- c("x", "y")
 
-# library(ggplot2) # 加载ggplot2软件包
-# p <- ggplot(diamonds, aes(carat, price, colour=cut)) + 
-#   geom_point()
+g1 <- ggplot(barplot_data, aes(bmi, skin)) +
+    geom_point(aes(colour = factor(skin))) +
+    geom_text(x = 25, y = 45, label = lm_eqn(lm_data), parse = TRUE, size = 6, colour = "#272222") +
+    geom_smooth(method = "lm", formula = y ~ x) +
+    labs(
+        x = "bmi", y = "皮肤厚度",
+        title = "BMI和皮肤厚度",
+        subtitle = "年龄22岁,非糖尿病患者的数据",
+    ) +
+    theme(
+        legend.position = "none",
+        plot.title = element_text(
+            face = "bold.italic", color = "orange", size = 24, hjust = 0.5, vjust = 0.5
+        )
+    )
+print(g1)
+ggsave("BMI和皮肤厚度.png", plot = g1, dpi = 500)
 
-# p %+% transform(diamonds, price = price / 1000)
+
+# lm_eqn <- function(df) {
+#     m <- lm(y ~ x, df)
+#     eq <- substitute(
+#         italic(y) == a + b %.% italic(x) ,
+#         list(
+#             a = format(unname(coef(m)[1]), digits = 2),
+#             b = format(unname(coef(m)[2]), digits = 2)
+
+#         )
+#     )
+#     as.character(as.expression(eq))
+# }
+# set.seed(1234)
+# df <- data.frame(x = c(1:100))
+# df$y <- 2 + 3 * df$x + rnorm(100, sd = 40)
+# p <- ggplot(data = df, aes(x = x, y = y)) +
+#     geom_smooth(method = "lm", se = FALSE, color = "black", formula = y ~ x) +
+#     geom_text(x = 25, y = 300, label = lm_eqn(df), parse = TRUE) +
+#     geom_point()
+
+
 # print(p)
