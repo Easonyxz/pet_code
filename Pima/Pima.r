@@ -19,7 +19,7 @@ lm_eqn <- function(df) {
     m <- lm(y ~ x, df)
     eq <- substitute(
         italic(y) == a + b %.% italic(x),
-        list(
+        list( 
             a = format(unname(coef(m)[1]), digits = 2),
             b = format(unname(coef(m)[2]), digits = 2)
         )

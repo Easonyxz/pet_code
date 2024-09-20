@@ -1,4 +1,11 @@
 # ggsave("high_dpi_image.png", plot = g4, dpi = 500)
+# conda create -n pet r-base=4.4.1 python=3.12
+# conda activate pet
+# conda install r-ggplot2
+# conda install r-httpuv
+# conda install conda-forge::r-dplyr
+# conda install conda-forge::r-tidyr
+
 ## 上机实践代码
 library(MASS) # 加载MASS软件包
 data(Pima.tr) # 加载Pima.tr数据集
