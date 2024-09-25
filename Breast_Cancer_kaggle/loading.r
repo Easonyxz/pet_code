@@ -12,6 +12,7 @@ data_file <- data_file[, -1]
 # write.csv(breast_cancer_colnames.csv,"data/breast_cancer_colnames.csv")
 
 
+
 # # 随机打乱数据
 # df_shuffled <- data_file %>% sample_frac(1)
 # set.seed(123)
@@ -22,7 +23,8 @@ data_file <- data_file[, -1]
 # rm(df_shuffled)
 # #  print( prop.table(table(train_data$diagnosis)))
 # #  print( prop.table(table(test_data$diagnosis)))
-# print("Complete loading ")
+
+print("Complete loading ")
 
 # # KNN
 # # 创建一个空向量，用于存储测试集的准确率
