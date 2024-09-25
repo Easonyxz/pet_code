@@ -5,6 +5,13 @@
 # conda install r-httpuv
 # conda install conda-forge::r-dplyr
 # conda install conda-forge::r-tidyr
+# conda install conda-forge::r-tidyverse
+# conda install conda-forge::r-Seurat
+# conda install conda-forge::r-pheatmap
+# conda install conda-forge::r-GGally
+# conda install conda-forge::r-class
+# conda install conda-forge::r-pROC
+# conda install conda-forge::r-caret
 
 ## 上机实践代码
 library(MASS) # 加载MASS软件包
