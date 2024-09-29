@@ -1,13 +1,16 @@
 library(tidyverse)
 library(class)
 library(caret)
-
+library(e1071)
 
 data_file <- read.csv("data/breast-cancer.csv")
 # 删除NULL数据
 data_file$X <- NULL
+patient <- data_file
 # 删除id列
 data_file <- data_file[, -1]
+# data_file$diagnosis <- factor(ifelse(data_file$diagnosis == "M", 0, 1))
+data_file$diagnosis <- factor(data_file$diagnosis)
 # breast_cancer_colnames.csv=sapply(data_file,class)
 # write.csv(breast_cancer_colnames.csv,"data/breast_cancer_colnames.csv")
 
@@ -24,27 +27,34 @@ data_file <- data_file[, -1]
 # #  print( prop.table(table(train_data$diagnosis)))
 # #  print( prop.table(table(test_data$diagnosis)))
 
+nrows <- NROW(data_file)
+set.seed(218) ## fix random value
+index <- sample(1:nrows, 0.7 * nrows) ## shuffle and divide
+
+# train <- wbcd                          ## 569 test data (100%)
+train_data <- data_file[index, ] ## 398 test data (70%)
+test_data <- data_file[-index, ] ## 171 test data (30%)
+
 print("Complete loading ")
 
-# # KNN
-# # 创建一个空向量，用于存储测试集的准确率
-# acc_test_knn <- numeric()
+source("Breast_Cancer_kaggle/func.r")
 
-# # 循环30次，每次改变k的值
-# for (i in 1:30) {
-#     # 使用knn算法进行预测，并计算准确率
-#     predict <- knn(train = train_data[, -1], test = test_data[, -1], cl = train_data[, 1], k = i, prob = T)
-#     acc_test_knn <- c(acc_test_knn, mean(predict == test_data[, 1]))
-# }
+# knn_func(train_data, test_data)
 
-# # 将k和准确率存储在一个数据框中
-# acc_data_knn <- data.frame(k = seq(1, 30), acc = acc_test_knn)
-# # 找到准确率最高的k值
-# opt_k <- subset(acc_data_knn, acc == max(acc))[1, ]
-# # 输出最优的k值和对应的准确率
-# sub_k <- paste("Optimal number of k is", opt_k$k, "(accuracy :", opt_k$acc, ") in KNN")
+# svm
+# svm_func(train_data, test_data)
 
-# pre_knn <- knn(train = train_data[, -1], test = test_data[, -1], cl = train_data[, 1], k = opt_k$k, prob = T)
+t <- patient
+orgin <- t$diagnosis
+t$diagnosis <- NULL
+r <- cancer_diagnosis_predict(t)
 
 
-# print("Complete KNN")
+pre_res <- data.frame(id = patient$id)
+pre_res <- pre_res %>%
+    mutate(
+        predict_diagnosis = r,
+        orgin_diagnosis = patient$diagnosis,
+        correct = ifelse(predict_diagnosis == orgin_diagnosis, "True", "False")
+    )
+write.csv(pre_res, "Breast_Cancer_kaggle/pre_res.csv")

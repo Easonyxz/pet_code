@@ -1,6 +1,8 @@
 # ggsave("high_dpi_image.png", plot = g4, dpi = 500)
 # conda create -n pet r-base=4.4.1 python=3.12
 # conda activate pet
+# conda install r-base=4.4.1
+# conda install conda-forge::r-table1
 # conda install r-ggplot2
 # conda install r-httpuv
 # conda install conda-forge::r-dplyr

@@ -1,17 +1,12 @@
-library(tidyverse)
-library(GGally)
-
+library(caret)
 start_time <- Sys.time()
 print("123")
-data_file <- read.csv("data/breast-cancer.csv")
-# 删除NULL数据
-data_file$X <- NULL
-# 删除id列
-data_file <- data_file[, -1]
-# breast_cancer_colnames.csv=sapply(data_file,class)
-# write.csv(breast_cancer_colnames.csv,"data/breast_cancer_colnames.csv")
 
 
+source("draw_confusion_matrix.r")
+# data <- factor(c("A", "B", "A", "B", "A"))
+# reference <- factor(c("A", "B", "B", "A", "A"))
+# cm <- confusionMatrix(data, reference)
 
 
 print("123")
