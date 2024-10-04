@@ -60,29 +60,14 @@
 #     )
 # print(g.knn)
 
-library(scales)
-g_pre_res <- count(pre_res, correct)
 
-g_pre_res <- g_pre_res %>%
-    mutate(
-        percentage = round(n / sum(n), 3),
-        per_str = paste( correct,":", percentage * 100, "%", sep = "")
-    ) %>%
-    arrange(desc(percentage))
-print(g_pre_res)
-write.csv(g_pre_res, "Breast_Cancer_kaggle/g_pre_res.csv")
-# pie(g_pre_res$percentage, labels=g_pre_res$per_str,
-#     radius = 1.0,clockwise=T,
-#     col=c("#E44A33", "#4DBAD6"),
-#   )
-# g.pre_res <- ggplot(g_pre_res, aes(
-#     x = "", y = n, fill = c("black", "white")
-# )) +
-#     geom_bar(stat = "identity", position = "stack", color = "black", linewidth = 0.5) +
-#     coord_polar(theta = "y", start = 0) +
 
-#     geom_text(aes(label = per_str), position = position_stack(vjust = 0.5)) +
-#     theme(axis.text = element_blank(), axis.ticks = element_blank(),legend.position = "none") +
-#     theme_void()
-# print(g.pre_res)
 
+# svm
+
+# print(cm_svm)
+
+# draw_roc(svm_roc_res, title = "SVM ROC CURVE")
+source("draw_confusion_matrix.r")
+print(cm_svm)
+draw_confusion_matrix(cm_svm, title = "SVM CONFUSION MATRIX")
