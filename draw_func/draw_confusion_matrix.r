@@ -1,4 +1,7 @@
-draw_confusion_matrix <- function(con_matrix, title = "CONFUSION MATRIX", col_pos = "#3F97D0", col_neg = "#F7AD50") {
+draw_confusion_matrix <- function(con_matrix, title = "CONFUSION MATRIX", col_pos = "#3F97D0", col_neg = "#F7AD50", save_img = FALSE) {
+  if (save_img == TRUE) {
+    png(paste(title, ".png", sep = ""), units = "in", width = 6, height = 8, res = 300)
+  }
   layout(matrix(c(1, 1, 2)))
   par(mar = c(2, 2, 2, 2))
   plot(c(100, 345), c(300, 450), type = "n", xlab = "", ylab = "", xaxt = "n", yaxt = "n")
@@ -65,4 +68,7 @@ draw_confusion_matrix <- function(con_matrix, title = "CONFUSION MATRIX", col_po
   # "Accuracy  95% CI 95%置信区间"
   acc_ci <- paste("95% CI:", "(", round(overall_values[3], 3), ",", round(overall_values[4], 3), ")")
   text(30, 13, labels = acc_ci, cex = 1.2, font = 3)
+  if (save_img == TRUE) {
+    dev.off()
+  }
 }

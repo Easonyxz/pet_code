@@ -29,20 +29,14 @@
 # ggsave(paste("Breast_Cancer_kaggle/img/g.cancer_se",".png"), plot = g.cancer_se, dpi = 200)
 # ggsave(paste("Breast_Cancer_kaggle/img/g.cancer_worst",".png"), plot = g.cancer_worst, dpi = 200)
 
-# library(corrplot)
-# data_cor <- data_file %>%
-#     mutate(
-#         diagnosis = ifelse(data_file$diagnosis == "M", 0, 1)
-#     )
-# g.cor.data <- cor(data_cor)
-# g.cor.mtestdata <- cor.mtest(data_cor, conf.level = 0.95)
-# # png("Breast_Cancer_kaggle/img/g.cor.png", width = 800, height = 800)
-# corrplot(
-#     g.cor.data,method = "circle",
-#     p.mat = g.cor.mtestdata$p, sig.level = 0.05,
-#     order = "hclust", tl.col = "black", tl.srt = 45, tl.pos = "lt"
-# )
-# dev.off()
+
+data_cor <- data_file %>%
+    mutate(
+        diagnosis = ifelse(data_file$diagnosis == "M", 0, 1)
+    )
+source("draw_func/draw_corrplot.r")
+
+draw_corrplot(data_cor,save_img=TRUE,title = "Cancer Correlation")
 
 
 
@@ -65,9 +59,10 @@
 
 # svm
 
-# print(cm_svm)
-
 # draw_roc(svm_roc_res, title = "SVM ROC CURVE")
-source("draw_confusion_matrix.r")
-print(cm_svm)
-draw_confusion_matrix(cm_svm, title = "SVM CONFUSION MATRIX")
+# source("draw_func/draw_confusion_matrix.r")
+# print(cm_svm)
+# draw_confusion_matrix(cm_svm, title = "SVM CONFUSION MATRIX",save_img =  TRUE)
+
+
+
