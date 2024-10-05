@@ -1,6 +1,3 @@
-
-
-
 knn_func <- function(train_data, test_data) {
     # KNN
     # 创建一个空向量，用于存储测试集的准确率
@@ -29,9 +26,10 @@ knn_func <- function(train_data, test_data) {
     return(pre_knn)
 }
 get_svm_res <- function(svmfunc, dataset) {
-# 使用svmfunc对dataset进行预测，并将结果存储在data_pred中，probability设为T表示返回概率值
+    # 使用svmfunc对dataset进行预测，并将结果存储在data_pred中，probability设为T表示返回概率值
     data_pred <- predict(svmfunc, newdata = dataset, probability = T)
-# 使用dplyr包中的select、bind_cols函数将预测结果data_pred与原始数据集dataset合并，并将结果存储在data_pred_df中
+    # 使用dplyr包中的select、bind_cols函数将预测结果data_pred与原始数据集dataset合并，并将结果存储在data_pred_df中
+    print(head(data_pred))
     data_pred_df <- dataset %>%
         dplyr::select(diagnosis) %>%
         dplyr::bind_cols(status_pred = data_pred) %>%
@@ -44,19 +42,11 @@ svm_func <- function(train_data, test_data) {
     return(learn_svm)
 }
 
-draw_roc <- function(roc_res, title = "ROC CURVE") {
-    g.roc <- ggroc(roc_res, legacy.axes = TRUE, color = "red") +
-        annotate("segment", x = 0, y = 0, xend = 1, yend = 1, linetype = "dashed", color = "#186F65") +
-        theme_bw() +
-        annotate("text", x = 0.75, y = 0.125, label = paste("AUC = ", round(roc_res$auc, 3)), size = 6) +
-        ggtitle(title)
-    print(g.roc)
-}
 
 cancer_diagnosis_predict <- function(pre_data, method) {
-# 使用predict函数对pre_data数据进行预测，并将结果存储在new_pre中
+    # 使用predict函数对pre_data数据进行预测，并将结果存储在new_pre中
     new_pre <- predict(method, pre_data[, -1])
-# 将new_pre转换为字符型，并将结果存储在new_res中
+    # 将new_pre转换为字符型，并将结果存储在new_res中
     new_res <- as.character(new_pre)
     return(new_res)
 }

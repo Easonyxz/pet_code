@@ -9,34 +9,22 @@
 #     labs(title = "Cancer Worst") +
 #     theme(plot.title = element_text(face = "bold", color = "black", hjust = 0.5, size = 12))
 
-# g.cancer_mean_cor <- ggcorr(data_file[, c(2:11)], name = "corr", label = TRUE) +
-#     theme(legend.position = "none") +
-#     labs(title = "Cancer Mean Correlation ") +
-#     theme(plot.title = element_text(face = "bold", color = "black", hjust = 0.5, size = 12))
-# g.cancer_se_cor <- ggcorr(data_file[, c(12:21)], name = "corr", label = TRUE) +
-#     theme(legend.position = "none") +
-#     labs(title = "Cancer SE Correlation") +
-#     theme(plot.title = element_text(face = "bold", color = "black", hjust = 0.5, size = 12))
-# g.cancer_worst_cor <- ggcorr(data_file[, c(22:31)], name = "corr", label = TRUE) +
-#     theme(legend.position = "none") +
-#     labs(title = "Cancer Worst Correlation") +
-#     theme(plot.title = element_text(face = "bold", color = "black", hjust = 0.5, size = 12))
+
 
 # print(g.cancer_mean)
-# ggsave("Breast_Cancer_kaggle/img/g.cancer_se_cor.png", plot = g.cancer_se_cor, dpi = 200)
-# ggsave(paste("Breast_Cancer_kaggle/img/g.cancer_worst_cor",".png"), plot = g.cancer_worst_cor, dpi = 200)
+
 # ggsave(paste("Breast_Cancer_kaggle/img/g.cancer_mean",".png"), plot = g.cancer_mean, dpi = 200)
 # ggsave(paste("Breast_Cancer_kaggle/img/g.cancer_se",".png"), plot = g.cancer_se, dpi = 200)
 # ggsave(paste("Breast_Cancer_kaggle/img/g.cancer_worst",".png"), plot = g.cancer_worst, dpi = 200)
 
 
-data_cor <- data_file %>%
-    mutate(
-        diagnosis = ifelse(data_file$diagnosis == "M", 0, 1)
-    )
-source("draw_func/draw_corrplot.r")
+# data_cor <- data_file %>%
+#     mutate(
+#         diagnosis = ifelse(data_file$diagnosis == "M", 0, 1)
+#     )
+# source("draw_func/draw_corrplot.r")
 
-draw_corrplot(data_cor,save_img=TRUE,title = "Cancer Correlation")
+# draw_corrplot(data_cor,title = "Cancer Correlation")
 
 
 
@@ -60,9 +48,27 @@ draw_corrplot(data_cor,save_img=TRUE,title = "Cancer Correlation")
 # svm
 
 # draw_roc(svm_roc_res, title = "SVM ROC CURVE")
-# source("draw_func/draw_confusion_matrix.r")
 # print(cm_svm)
-# draw_confusion_matrix(cm_svm, title = "SVM CONFUSION MATRIX",save_img =  TRUE)
+source("draw_func/draw_confusion_matrix.r")
+# draw_confusion_matrix(cm_svm, title = "SVM CONFUSION MATRIX",col_pos="#f5a29c",col_neg="#73dcdf",save_img =  F)
 
 
+data= read.csv("data/123.csv")
+data$real <- as.factor(data$real)
+data$pred <- as.factor(data$pred)
+print(head(data))
+# cm= confusionMatrix(data$real ,data$pred,mode = "everything")
+# print(cm)
+# draw_confusion_matrix(cm)
 
+svm_roc_res <- roc(
+    data$real,
+    data$Prob_0,
+    auc = T
+)
+print(svm_roc_res)
+source("draw_func/draw_roc.r")
+roc.list <- roc(outcome ~ s100b + ndka + wfns, data = aSAH)
+roc.list=append(roc.list,list(svm=svm_roc_res) )
+
+draw_roc(roc.list, title = "SVM ROC 1CURVE",save_img = T )

@@ -12,11 +12,11 @@ pre_data <- patient
 orgin_diagnosis_res <- pre_data$diagnosis
 pre_data$diagnosis <- NULL
 # 删除id列
-data_file <- data_file[, -1]
+data_file$id <- NULL
 # data_file$diagnosis <- factor(ifelse(data_file$diagnosis == "M", 0, 1))
 data_file$diagnosis <- factor(data_file$diagnosis)
-# breast_cancer_colnames.csv=sapply(data_file,class)
-# write.csv(breast_cancer_colnames.csv,"data/breast_cancer_colnames.csv")
+
+# write.csv(data_file,"data/breast_cancer_new.csv")
 
 
 
@@ -35,18 +35,18 @@ source("Breast_Cancer_kaggle/func.r")
 # svm
 svmRadial <- svm_func(train_data, test_data)
 svm_pred_df <- get_svm_res(svmRadial, train_data)
-# roc
-svm_roc_res <- roc(
-    svm_pred_df$diagnosis,
-    svm_pred_df$B,
-    auc = T,
-    smooth = TRUE
-)
+# # roc
+# svm_roc_res <- roc(
+#     svm_pred_df$diagnosis,
+#     svm_pred_df$B,
+#     auc = T,
+#     smooth = TRUE
+# )
 # print(svm_roc_res)
 # confusionMatrix
-cm_svm <- confusionMatrix(svm_pred_df$diagnosis,
-    svm_pred_df$status_pred,
-    mode = "everything"
-)
+# cm_svm <- confusionMatrix(svm_pred_df$diagnosis,
+#     svm_pred_df$status_pred,
+#     mode = "everything"
+# )
 
 print("Complete loading ")

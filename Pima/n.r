@@ -15,6 +15,7 @@
 # conda install conda-forge::r-pROC
 # conda install conda-forge::r-caret
 # conda install conda-forge::r-corrplot
+# conda install conda-forge::r-ggsci
 
 ## 上机实践代码
 library(MASS) # 加载MASS软件包
